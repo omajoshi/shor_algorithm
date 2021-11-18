@@ -21,9 +21,10 @@ for i = 2:Q
     r(i) = mod(x*r(i-1),N);
 end
 
-fprintf("These are the values of f(r): \n")
-disp(unique(r.'));
-f_r = input("Pick one to 'measure': ");
+% fprintf("These are the values of f(r): \n")
+% disp(unique(r.'));
+% f_r = input("Pick one to 'measure': ");
+f_r = 1
 
 for i = 1:Q 
     if r(i) ~= f_r
@@ -38,13 +39,16 @@ fprintf("\n\n\n");
 
 qft_r = qft*r;
 figure;
-plot(0:Q-1,abs(qft_r));
+plot(0:Q-1,abs(qft_r).^2);
 xlim([-Q/10 Q+Q/10]);
+title("QFT for N=" + N + " Q = " + Q + " x=" + x);
+xlabel("k");
+ylabel("P(k)");
 [sorted,indices] = sort(qft_r, 'descend');
 
 top = 10;
 for i = 1 : top
-    if sorted(i) > 1e-6
+    if abs(sorted(i)) > 1e-6
         fprintf("state |%d> with amplitude %f\n", indices(i)-1, abs(sorted(i)));
     end
 end
