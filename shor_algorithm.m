@@ -4,7 +4,7 @@
 N = input("N = ");
 x = input("x = ");
 if gcd(N,x) ~= 1 
-    fprintf('Hooray! %d is already a factor of %d.\n',x,N);
+    fprintf("Hooray! gcd(N,x) != 1, it's %d which is a factor of %d.\n",gcd(N,x),N);
     return;
 end
 Q = N^2;
