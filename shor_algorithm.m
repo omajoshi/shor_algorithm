@@ -24,18 +24,16 @@ end
 % fprintf("These are the values of f(r): \n")
 % disp(unique(r.'));
 % f_r = input("Pick one to 'measure': ");
-f_r = 1
+% fprintf("\n\n\n");
+f_r = 1;
 
 for i = 1:Q 
     if r(i) ~= f_r
         r(i) = 0;
-    else
-        r(i) = 1;
     end
 end
     
 r = normalize(r, 'norm');
-fprintf("\n\n\n");
 
 qft_r = qft*r;
 figure;
@@ -46,13 +44,23 @@ xlabel("k");
 ylabel("P(k)");
 [sorted,indices] = sort(qft_r, 'descend');
 
+
+
 top = 10;
+ks = zeros(1,top);
 for i = 1 : top
     if abs(sorted(i)) > 1e-6
-        fprintf("state |%d> with amplitude %f\n", indices(i)-1, abs(sorted(i)));
+        ks(1,i) = (indices(i)-1)/Q;
+        % fprintf("state |%d> with probability %f\n", indices(i)-1, abs(sorted(i)).^2);
     end
 end
+[ks,indices] = sort(ks);
 
-k = input("above are the top few states and their amplitudes. pick one to 'measure' as 'k': ");
-fprintf("k/Q = %d/%d = %f\n", k,Q, k/Q);
-% add lookup table to match k/Q to c/s, then keep track of s -> lcm({s})
+% k = input("above are the top few states and their amplitudes. pick one to 'measure' as 'k': ");
+% fprintf("k/Q = %d/%d = %f\n", k,Q, k/Q);
+
+fprintf("These are the approximate values of c/s so far:\n");
+disp(ks);
+s = input("What do you think s is? ");
+
+fprintf("The two factors of %d are %d and %d\n", N, gcd(N,x^(s/2)-1), gcd(N,x^(s/2)+1));
