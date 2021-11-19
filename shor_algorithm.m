@@ -2,6 +2,13 @@
 % Shor's Algorithm, implemented in Matlab
 
 N = input("N = ");
+Q = N^2;
+qft = zeros(Q,Q);
+for i = 1:Q
+    for j = 1:Q
+        qft(i,j) = exp(1i*2*pi*(i-1)*(j-1)/Q)/sqrt(Q);
+    end
+end
 
 while true
     x = input("x = ");
@@ -9,19 +16,13 @@ while true
         fprintf("Hooray! gcd(N,x) != 1, it's %d which is a factor of %d.\n",gcd(N,x),N);
         return;
     end
-    Q = N^2;
-    qft = zeros(Q,Q);
-    for i = 1:Q
-        for j = 1:Q
-            qft(i,j) = exp(1i*2*pi*(i-1)*(j-1)/Q)/sqrt(Q);
-        end
-    end
+    
+    
+    fr = ones(Q,1)/sqrt(Q);
 
-    r = ones(Q,1)/sqrt(Q);
-
-    r(1) = x^(1-0);
+    fr(1) = x^(1-0);
     for i = 2:Q
-        r(i) = mod(x*r(i-1),N);
+        fr(i) = mod(x*fr(i-1),N);
     end
 
     % fprintf("These are the values of f(r): \n")
@@ -31,14 +32,14 @@ while true
     f_r = 1;
 
     for i = 1:Q 
-        if r(i) ~= f_r
-            r(i) = 0;
+        if fr(i) ~= f_r
+            fr(i) = 0;
         end
     end
 
-    r = normalize(r, 'norm');
+    fr = normalize(fr, 'norm');
 
-    qft_r = qft*r;
+    qft_r = qft*fr;
     figure;
     plot(0:Q-1,abs(qft_r).^2);
     xlim([-Q/10 Q+Q/10]);
