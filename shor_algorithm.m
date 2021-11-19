@@ -50,7 +50,7 @@ while true
 
 
 
-    top = 10;
+    top = 20;
     ks = zeros(1,top);
     for i = 1 : top
         if abs(sorted(i)) > 1e-6
@@ -63,8 +63,8 @@ while true
     % k = input("above are the top few states and their amplitudes. pick one to 'measure' as 'k': ");
     % fprintf("k/Q = %d/%d = %f\n", k,Q, k/Q);
 
-    fprintf("These are the approximate values of c/s so far:\n");
-    disp(ks);
+    fprintf("These are the approximate values of c/s:\n");
+    disp(reshape(ks,[2,top/2]));
     s = input("What do you think s is? ");
     if mod(s,2) == 0 && mod(x^(s/2),N) ~= -1
         fprintf("If everything went right, %d = %d x %d\n", N, gcd(N,x^(s/2)-1), gcd(N,x^(s/2)+1));
