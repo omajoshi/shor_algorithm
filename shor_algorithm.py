@@ -5,7 +5,7 @@ import numpy as np
 import matplotlib.pyplot as plt
 from math import sqrt, gcd
 
-# https://en.wikipedia.org/wiki/Quantum_Fourier_transform
+# https://en.wikipedia.org/wiki/Shor%27s_algorithm
 # see above link for explanation of algorithm
 
 def shor_algorithm():
@@ -62,17 +62,14 @@ def shor_algorithm():
         # simulate measurement of the top few k values
         # using |k_reg| as measurement probability
         top = 20
-        k_top = np.zeros((top), dtype="float64")
-        for i in range(top):
-            k_top[i] = np.random.choice(range(Q), p=k_abs)/Q
-
-        # prompt for user input to determine the period based on measured values
-        print("These are the approximate values of c/s:")
+        k_top = np.random.choice(range(Q), top, p=k_abs)/Q
+        print(f"These are the approximate values of c/s after {top} measurements:")
         print(k_top)
-        print("Each value is very close to a fraction with a small denominator s_i")
-        s = int(input("What do you think lcm(s_i) is? "))
+        print("Each value is very close to a fraction with a small denominator s_i.")
+        # prompt for user input to determine the period s based on measured values
+        s = int(input("What do you think s = lcm(s_i) is? s = "))
         if s % 2 == 0 and (root:=pow(x,s//2,N)) != N-1: # nontrivial square root
-            print(f"If everything went right, {N} = {gcd(N,root+1)} * {gcd(N,root-1)}")
+            print(f"If everything went right, {N} = {gcd(N,root+1)} * {gcd(N,root-1)}.")
             break
         print("You were unlucky! Try again with a different x value!")
 
