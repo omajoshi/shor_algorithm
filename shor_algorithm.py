@@ -8,8 +8,8 @@ from math import sqrt, gcd
 # https://en.wikipedia.org/wiki/Shor%27s_algorithm
 # see above link for explanation of algorithm
 
-def shor_algorithm():
-    print("Shor's Algorithm in Python, designed by Om Joshi")
+def shor_algorithm(plot_qft=False):
+    print("Shor's Algorithm Simulator, designed by Om Joshi")
     N = int(input("What number do you want to factor? N = ")) # our factorization target
     Q = N**2
 
@@ -28,8 +28,11 @@ def shor_algorithm():
     # loop until we find a suitable x value
     while True:
         x = int(input(f"Pick a number x where 1 < x < {N}: x = "))
+        if x <= 1 or x >= N:
+            continue
+
         if (g:=gcd(N,x)) != 1:
-            print(f"Hooray! gcd(N,x) != 1, it's {g} which is a factor of {N}.")
+            print(f"Hooray! gcd({N},{x}) = {g} which is a factor of {N}.")
             break
         
         r_reg = np.zeros((Q), dtype='complex_') # input state
@@ -48,16 +51,15 @@ def shor_algorithm():
         k_reg = qft@r_reg # apply the qft -> k domain
         k_abs = np.abs(k_reg*k_reg) # compute the probability vector
 
-        '''
-        # plot the probability of each value in the k domain
-        fig, ax = plt.subplots()
-        ax.plot(range(Q),k_abs)
-        ax.set_title(f"QFT for N={N} Q={Q} x={x}");
-        ax.set_xlim(-Q/10, Q+Q/10)
-        ax.set_xlabel("k");
-        ax.set_ylabel("P(k)")
-        fig.show()
-        '''
+        if plot_qft:
+            # plot the probability of each value in the k domain
+            fig, ax = plt.subplots()
+            ax.plot(range(Q),k_abs)
+            ax.set_title(f"QFT for N={N} Q={Q} x={x}");
+            ax.set_xlim(-Q/10, Q+Q/10)
+            ax.set_xlabel("k");
+            ax.set_ylabel("P(k)")
+            fig.show()
         
         # simulate measurement of the top few k values
         # using |k_reg| as measurement probability
