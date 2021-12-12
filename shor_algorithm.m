@@ -1,5 +1,5 @@
 % Designed by Om Joshi and Parth Shroff
-% Shor's Algorithm, implemented in Matlab
+% Shor's Algorithm Simulator, implemented in Matlab
 
 N = input("N = ");
 Q = N^2;
