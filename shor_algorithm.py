@@ -1,5 +1,5 @@
 # Designed by Om Joshi
-# Shor's Algorithm Simulator, ported to Python from Matlab
+# Shor's Algorithm Simulator, self-ported to Python from Matlab
 
 import numpy as np
 import matplotlib.pyplot as plt
