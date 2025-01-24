@@ -1,4 +1,4 @@
-% Designed by Om Joshi and Parth Shroff
+% Designed by Om Joshi, with help from Parth Shroff
 % Shor's Algorithm Simulator, implemented in Matlab
 
 N = input("N = ");
